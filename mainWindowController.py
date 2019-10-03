@@ -3,7 +3,7 @@ import calendar
 class MapytinWindowController():
     def __init__(self):
         self.currentDatetime=self.getCurrentSystemTime()
-        self.selectedDateTime=datetime.fromtimestamp(self.currentDatetime)
+        self.selectedDateTime=datetime.datetime.fromtimestamp(self.currentDatetime)
 
     def getCurrentSystemTime(self):
         return datetime.datetime.now()
