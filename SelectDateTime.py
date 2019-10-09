@@ -1,7 +1,5 @@
 from datetime import datetime
-import calendar
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QDate, QTime, QDateTime
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -16,7 +14,7 @@ class Ui_Dialog(object):
         font.setWeight(50)
         self.calendarWidget.setFont(font)
         self.calendarWidget.setAutoFillBackground(True)
-        self.calendarWidget.setMinimumDate(QtCore.QDate(currentYear, currentMonth, int(currentDateNumber)))
+        self.calendarWidget.setMinimumDate(QtCore.QDate(currentYear, currentMonth, int(currentDay)))
         self.calendarWidget.setMaximumDate(QtCore.QDate(2030, 12, 31))
         self.calendarWidget.setFirstDayOfWeek(QtCore.Qt.Sunday)
         self.calendarWidget.setGridVisible(True)
@@ -113,26 +111,31 @@ class Ui_Dialog(object):
         self.pushButtonConfirm.setText(_translate("Dialog", "Confirm"))
 
 
-class OpenSelectDateTimeDialog(QtWidgets.QDialog, Ui_Dialog):
-    global currentDateNumber, currentMonth, currentYear
+class OpenSelectDateTimeDialog(QtWidgets.QDialog, Ui_Dialog, QtCore.QDate):
+    global currentDay, currentMonth, currentYear, chosenDay, chosenMonth,chosenYear
 
-    currentDateNumber = datetime.now().strftime("%d")
+    currentDay = datetime.now().day
     currentMonth = datetime.now().month
     currentYear = datetime.now().year
 
+
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
+        QtCore.QDate.__init__(self)
         self.setupUi(self)
         self.pushButtonBack.clicked.connect(self.hide)
-        #self.pushButtonConfirm.clicked.connect()
-        #QtWidgets.QCalendarWidget.setSelectedDate(QDate())
-
+        #print default date for cases where user does not change date
+        print(self.calendarWidget.selectedDate().toString("dd-MM-yyyy"))
+        self.calendarWidget.clicked.connect(self.userSelectedDate)
 
     #2 functions to return selected date and time on the
     #MainWindow UI / New Window UI where stall's information
     #will be printed according to the user chosen date and time
-   # def printUserChosenDate(self):
-        #print()
+    def userSelectedDate(self):
+        self.date = self.calendarWidget.selectedDate().toString("dd-MM-yyyy")
+        print(self.date)
+        return self.date
+
     #def userChosenTime(self):
 
 
@@ -142,3 +145,5 @@ if __name__ == "__main__":
     SelectDateTimeDialog = OpenSelectDateTimeDialog()
     SelectDateTimeDialog.show()
     sys.exit(app.exec_())
+
+
