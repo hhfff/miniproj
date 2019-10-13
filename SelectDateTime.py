@@ -95,11 +95,10 @@ class Ui_SelectDateTime(object):
         self.pushButtonConfirm.setText(_translate("SelectDateTime", "Confirm"))
 
 # create new class to open GUI generated from Qt Designer
-class OpenSelectDateTimeWindow(QtWidgets.QWidget, Ui_SelectDateTime, QtCore.QDate):
+class OpenSelectDateTimeWindow(QtWidgets.QWidget, Ui_SelectDateTime):
     # initialise GUI and window
     def __init__(self):
         QtWidgets.QWidget.__init__(self)
-        QtCore.QDate.__init__(self)
         self.setupUi(self)
         # when Back button is clicked, window is closed
         self.pushButtonBack.clicked.connect(self.close)
