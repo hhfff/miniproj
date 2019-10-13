@@ -131,6 +131,4 @@ if __name__ == "__main__":
     SelectDateTimeWindow = OpenSelectDateTimeWindow()
     SelectDateTimeWindow.show()
     sys.exit(app.exec_())
-
-    
     
