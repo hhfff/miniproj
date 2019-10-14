@@ -67,13 +67,13 @@ sqls='''
         );
         
 
-        insert into stalls (name,description,pic_addr,canteen_id) values('Chicken Rice','Tender chicken','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('Chicken Rice','Tender chicken','chicken_rice.png',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(1,2);
         
-        insert into stalls (name,description,pic_addr,canteen_id) values('Malay food','malay food descript','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('Malay food','malay food descript','malay_food',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(2,1);
 
-        insert into stalls (name,description,pic_addr,canteen_id) values('McDonald','various drink','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('McDonald','various drink','mcdonalds.png',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(3,1);
         insert into stall_stall_types(stall_id, stall_type_id) values(3,3);
 
@@ -184,7 +184,7 @@ def initDB():
 def insert():
     pass
 def retrieve(query):
-    #print(query)
+    print(query)
     try:
         conn=sqlite3.connect(DB_NAME)
         cursor=conn.cursor()
