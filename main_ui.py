@@ -85,7 +85,7 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.loadStall()
+        self.displayStall()
         
             
 
@@ -105,17 +105,33 @@ class Ui_MainWindow(object):
 
     def openDateTimePicker(self):
         print('test')
+    def loadImage(self,image_url,isIcon=False):
+        try:
+            if isIcon:
+                return QtGui.QIcon(image_url) 
+            else:
+                return QtGui.QPixmap(image_url)
+        except Exception as e:
+            print('load image error')
 
-    def loadStall(self):
-        x,y=0,0
-        max_column=2
+    def displayStall(self):
         for item in self.main_window_controller.curr_stalls:
+            print(self.main_window_controller.image_url_prefix+item.pic_addr)
             btn=QtWidgets.QPushButton(item.name)
             btn.setMaximumSize(QtCore.QSize(100,100))
-            self.gridLayout_stalls.addWidget(btn,y,x)
+            btn.clicked.connect(self.openStallDetail)
+            icon=self.loadImage(self.main_window_controller.image_url_prefix+item.pic_addr,isIcon=True)
+            icon
+            btn.setIcon(icon)
+            self.gridLayout_stalls.addWidget(btn,0,0)
+        x,y=1,0
+        for i in range(20):
+            self.gridLayout_stalls.addWidget(QtWidgets.QLabel(str(i)),y,x)
             x+=1
-            if x > max_column:
-                x=0
+            if x>=3:
                 y+=1
-            #self.gridLayout_stalls.addWidget(QtWidgets.QLabel('hello'),0,1)
+                x=0
+
+    def openStallDetail(self):
+        pass
 
