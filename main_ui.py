@@ -15,11 +15,15 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         #init controller
         self.main_window_controller=MainWindowController()
+        #MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground,True)
+        #MainWindow.setStyleSheet("background-color:rgba(255,255,255,0.9)")
 
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        #self.centralwidget.setGraphicsEffect(QtWidgets.QGraphicsBlurEffect())
+
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
@@ -67,6 +71,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.gridLayout_stalls = QtWidgets.QGridLayout()
         self.gridLayout_stalls.setObjectName("gridLayout_stalls")
+        
 
         '''spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_stalls.addItem(spacerItem, 1, 1, 1, 1)
@@ -121,11 +126,21 @@ class Ui_MainWindow(object):
             btn.setMaximumSize(QtCore.QSize(100,100))
             btn.clicked.connect(self.openStallDetail)
             icon=self.loadImage(self.main_window_controller.image_url_prefix+item.pic_addr,isIcon=True)
-            icon
             btn.setIcon(icon)
+            btn.setStyleSheet('''
+            QPushButton{
+                background-color:rgb(0,255,0);
+                text-align: center;
+            }
+            QPushButton:hover{
+                background-color:rgb(255,0,0);
+
+            }
+            ''')
+            
             self.gridLayout_stalls.addWidget(btn,0,0)
         x,y=1,0
-        for i in range(20):
+        for i in range(5):
             self.gridLayout_stalls.addWidget(QtWidgets.QLabel(str(i)),y,x)
             x+=1
             if x>=3:
