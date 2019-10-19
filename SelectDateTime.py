@@ -94,6 +94,7 @@ class Ui_SelectDateTime(object):
         self.pushButtonBack.setText(_translate("SelectDateTime", "Back"))
         self.pushButtonConfirm.setText(_translate("SelectDateTime", "Confirm"))
 
+
 # create new class to open GUI generated from Qt Designer
 class OpenSelectDateTimeWindow(QtWidgets.QWidget, Ui_SelectDateTime):
     # initialise GUI and window
@@ -102,32 +103,37 @@ class OpenSelectDateTimeWindow(QtWidgets.QWidget, Ui_SelectDateTime):
         self.setupUi(self)
         # when Back button is clicked, window is closed
         self.pushButtonBack.clicked.connect(self.close)
-        # when Confirm button is clicked, return date chosen by the user
-        self.pushButtonConfirm.clicked.connect(self.userChosenDate)
-        # when Confirm button is clicked, return time chosen by the user
+        # when Confirm button is clicked, return day chosen by the user (prints date, followed by day)
+        self.pushButtonConfirm.clicked.connect(self.getDayOfWeek)
+        # when Confirm button is clicked, return time chosen by the user (prints time)
         self.pushButtonConfirm.clicked.connect(self.userChosenTime)
 
-    # 2 functions to return selected date and time on the
-    # MainWindow UI / New Window UI where stall's information
-    # will be printed according to the user chosen date and time
 
     # this function is to return user chosen date from the calendarWidget widget
     def userChosenDate(self):
         self.date = self.calendarWidget.selectedDate().toString("dd-MM-yyyy, dddd")
         print(self.date)  # for checking in terminal
         return self.date
-        #example: returns 13-10-2019, Sunday
+        # example: returns 13-10-2019, Sunday
 
     # this function is to return user chosen time from the timeEdit widget
     def userChosenTime(self):
         self.time = self.timeEdit.time().toString("HH:mm")
         print(self.time)  # for checking in terminal
         return self.time
-        #example: returns 12:00 if user selects 12:00 PM
-        
+        # example: returns 12:00 if user selects 12:00 PM
+    
+    # this function is to return the day of the week chosen by the user
+    def getDayOfWeek(self):
+        chosenDate = self.userChosenDate().split()
+        chosenDay = chosenDate[-1]
+        print(chosenDay)
+        return chosenDay
+        # example: returns Sunday
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     SelectDateTimeWindow = OpenSelectDateTimeWindow()
     SelectDateTimeWindow.show()
     sys.exit(app.exec_())
-    
+
