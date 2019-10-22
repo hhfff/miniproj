@@ -15,7 +15,7 @@ class MainWindowController():
         self.all_stalls=[]
         self.curr_stalls=self.getStalls(self.selectedDateTime)
         
-        self.selectedDateTime=datetime.datetime.fromtimestamp(self.currentDatetime)
+        #self.selectedDateTime=datetime.datetime.fromtimestamp(self.currentDatetime)
 
     def getCurrentSystemTime(self):
         return datetime.datetime.now()

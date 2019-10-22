@@ -424,7 +424,7 @@ def insert():
 
 
 def retrieve(query):
-    # print(query)
+    print(query)
     try:
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()

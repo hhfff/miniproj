@@ -92,11 +92,8 @@ class Stall(ItemType):
     def fetchMenuByDay(self,day_id,time):
         #todo
         #menu item items column does't require
-        query=f'''SELECT menu_items.id,menu_items.name,menu_items.description,menu_items.pic_addr,menu_items.price,menu_items.stall_id, group_concat(food_types.name) as food_type,menu_items_time.day_id, days.name as day_name,menu_items_time.start_time,menu_items_time.end_time from menu_items 
-                INNER JOIN menu_item_food_types
-                on menu_items.id=menu_item_food_types.menu_item_id
-                INNER JOIN food_types
-                on menu_item_food_types.food_type_id=food_types.id
+        
+        query=f'''SELECT menu_items.id,menu_items.name,menu_items.description,menu_items.pic_addr,menu_items.price,menu_items.stall_id,menu_items_time.day_id, days.name as day_name,menu_items_time.start_time,menu_items_time.end_time from menu_items 
                 INNER JOIN menu_items_time 
                 on menu_items.id=menu_items_time.menu_item_id
                 INNER JOIN days
@@ -105,7 +102,7 @@ class Stall(ItemType):
                 AND days.id={day_id}
                 AND time(menu_items_time.start_time)<='{time}'
                 AND '{time}'<=time(menu_items_time.end_time)
-                GROUP BY menu_items.id;
+                ;
         '''
         self.menu_items_by_day=[ MenuItem(data) for data in db.retrieve(query)]
     def fetchAllMenu(self):
@@ -117,7 +114,7 @@ class MenuItem(ItemType):
         super().__init__(data['id'],data['name'],data['description'],data['pic_addr'])
         self.price=data['price']
         self.stall_id=data['stall_id']
-        self.food_types=data['food_type'].split(',')
+        #self.food_types=data['food_type'].split(',')
         self.operation_hour=OperationHour(data['day_id'],data['day_name'],data['start_time'],data['end_time'])
 
 
