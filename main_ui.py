@@ -10,11 +10,12 @@
 from PyQt5 import QtCore, QtGui,QtWidgets
 from mainWindowController import MainWindowController
 from Stall_Info_Page import Ui_Stall_Info_Window
+from SelectDateTime import Ui_SelectDateTime
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         #init controller
-        self.main_window_controller=MainWindowController()
+        self.main_window_controller=MainWindowController(self)
         #MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground,True)
         #MainWindow.setStyleSheet("background-color:rgba(255,255,255,0.9)")
 
@@ -95,9 +96,8 @@ class Ui_MainWindow(object):
             
 
         self.retranslateUi(MainWindow)
-        self.updateDateTimeText(self.main_window_controller.selectedDateTime.strftime("%m/%d/%Y"),self.main_window_controller.selectedDateTime.strftime("%H:%M:%S"))
         self.pushButton.clicked.connect(self.openDateTimePicker)
-
+        self.updateDateTimeText(self.main_window_controller.selectedDateTime.strftime("%m/%d/%Y %H:%M:%S"))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -110,7 +110,11 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Select time"))
 
     def openDateTimePicker(self):
-        print('test')
+        self.SelectDateTime = QtWidgets.QDialog()
+        self.SelectDateTime.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.selectDateTimeUi = Ui_SelectDateTime()
+        self.selectDateTimeUi.setupUi(self.SelectDateTime,self.main_window_controller)
+        self.SelectDateTime.show()
 
     def loadImage(self,image_url,isIcon=False):
         try:
@@ -122,13 +126,25 @@ class Ui_MainWindow(object):
             print('load image error')
 
     def displayStall(self):
-
+        #delete previous widget first
+        for i in reversed(range(self.gridLayout_stalls.count())):
+            item=self.gridLayout_stalls.itemAt(i)
+            if item is not None:
+                widget=item.widget()
+                if widget is not None:
+                    widget.setParent(None)
+                    widget.deleteLater()
+        #add new button
+        x,y=0,0
         for item in self.main_window_controller.curr_stalls:
-            btn=QtWidgets.QPushButton(item.name)
-            btn.setMaximumSize(QtCore.QSize(100,100))
+            btn=QtWidgets.QToolButton()
+            btn.setText(item.name)
+            #btn.setMaximumSize(QtCore.QSize(100,100))
             btn.clicked.connect(lambda checked,item=item: self.openStallDetail(item))
             icon=self.loadImage(self.main_window_controller.image_url_prefix+item.pic_addr,isIcon=True)
             btn.setIcon(icon)
+            btn.setIconSize(QtCore.QSize(180,180))
+            btn.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
             btn.setStyleSheet('''
             QPushButton{
                 background-color:rgb(0,255,0);
@@ -139,9 +155,14 @@ class Ui_MainWindow(object):
 
             }
             ''')
+            print(x,y)
 
             
-            self.gridLayout_stalls.addWidget(btn)
+            self.gridLayout_stalls.addWidget(btn,y,x)
+            x+=1
+            if x>2:
+                x=0
+                y+=1
         '''x,y=1,0
         for i in range(5):
             self.gridLayout_stalls.addWidget(QtWidgets.QLabel(str(i)),y,x)
@@ -152,10 +173,11 @@ class Ui_MainWindow(object):
 
     def openStallDetail(self,stall):
         self.Stall_Info_Window = QtWidgets.QMainWindow()
+        self.Stall_Info_Window.setWindowModality(QtCore.Qt.ApplicationModal)
         self.stallDetail = Ui_Stall_Info_Window()
         self.stallDetail.setupUi(self.Stall_Info_Window,stall,self.main_window_controller)
         self.Stall_Info_Window.show()
 
-    def updateDateTimeText(self,dateText,timeText):
-        self.lbl_date.setText(dateText+' '+timeText)
+    def updateDateTimeText(self,str):
+        self.lbl_date.setText(str)
 

@@ -11,7 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 
 class Ui_SelectDateTime(object):
-    def setupUi(self, SelectDateTime):
+    def setupUi(self, SelectDateTime,mainWindowController):
+        self.mainWindowController=mainWindowController
         SelectDateTime.setObjectName("SelectDateTime")
         SelectDateTime.resize(616, 497)
         self.verticalLayout = QtWidgets.QVBoxLayout(SelectDateTime)
@@ -140,15 +141,20 @@ class Ui_SelectDateTime(object):
         QtCore.QMetaObject.connectSlotsByName(SelectDateTime)
 
         # when Confirm button is clicked, return day chosen by the user (print date, followed by day)
-        self.pushButton_Confirm.clicked.connect(self.getDayOfWeek)
+        self.pushButton_Confirm.clicked.connect(self.comfirmClicked)
         # when Confirm button is clicked, return time chosen by the user
-        self.pushButton_Confirm.clicked.connect(self.userChosenTime)
 
         # 2 functions to return selected date and time on the
         # MainWindow UI / New Window UI where stall's information
         # will be printed according to the user chosen date and time
 
     # this function is to return user chosen date from the calendarWidget widget
+    def comfirmClicked(self):
+        q_date=self.calendarWidget.selectedDate()
+        q_time=self.timeEdit.time()
+        q_dateTime=QtCore.QDateTime(q_date,q_time)
+        self.mainWindowController.setSelectTime(q_dateTime.toPyDateTime())
+
     def userChosenDate(self):
         # obtain selected date from calendar widget and convert it to string
         self.date = self.calendarWidget.selectedDate().toString("dddd, dd MMMM, yyyy")
@@ -159,7 +165,7 @@ class Ui_SelectDateTime(object):
     # this function is to return user chosen time from the timeWidget
     def userChosenTime(self):
         # obtain selected time from timeEdit widget and convert it to string
-        self.time = self.timeEdit.time().toString("HH:mm")
+        self.time = self.timeEdit.time().toString("HH:mm:ss")
         print(self.time)  # for checking in terminal
         return self.time
         # example: returns 12:00 if user selects 12:00

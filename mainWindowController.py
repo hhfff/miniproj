@@ -5,15 +5,16 @@ import db
 
 class MainWindowController():
 
-    def __init__(self):
+    def __init__(self,mainUi):
         db.check_DB_exist()
+        self.mainUi=mainUi
         self.image_url_prefix='images/'
         self.currentDatetime=self.getCurrentSystemTime()
         self.selectedDateTime=self.currentDatetime
         #self.selectedDateTime=datetime.fromtimestamp(self.currentDatetime.)
         self.canteen=Canteen.all()[0]
         self.all_stalls=[]
-        self.curr_stalls=self.getStalls(self.selectedDateTime)
+        self.getStalls(self.selectedDateTime)
         
         #self.selectedDateTime=datetime.datetime.fromtimestamp(self.currentDatetime)
 
@@ -28,9 +29,14 @@ class MainWindowController():
         #return '09:09:09'
 
     def getStalls(self,datetime):
-        return Stall.fetchStalls(self.getDayIdByDateTime(datetime),self.getTimeByDateTime(datetime))
+        self.curr_stalls=Stall.fetchStalls(self.getDayIdByDateTime(datetime),self.getTimeByDateTime(datetime))
 
-    
+    def setSelectTime(self,newValue):
+        #todo check equal
+        self.selectedDateTime=newValue
+        self.getStalls(self.selectedDateTime)
+        self.mainUi.updateDateTimeText(self.selectedDateTime.strftime("%m/%d/%Y %H:%M:%S"))
+        self.mainUi.displayStall()
     
 
     

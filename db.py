@@ -68,19 +68,19 @@ sqls = '''
         );
         
 
-        insert into stalls (name,description,pic_addr,canteen_id) values('Chicken Rice','Tender chicken','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('Chicken Rice','Tender chicken','chicken_rice.jpg',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(1,2);
         
-        insert into stalls (name,description,pic_addr,canteen_id) values('Malay BBQ','Malay cuisines','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('Malay BBQ','Malay cuisines','malay_food.jpeg',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(2,1);
 
-        insert into stalls (name,description,pic_addr,canteen_id) values('McDonalds','Burgers, drinks, snacks and desserts','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('McDonalds','Burgers, drinks, snacks and desserts','mcdonalds.jpg',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(3,3);
         
-        insert into stalls (name,description,pic_addr,canteen_id) values('Hand-made Noodles','Freshly cooked noodles','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('Hand-made Noodles','Freshly cooked noodles','banmian.jpg',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(4,2);
 
-        insert into stalls (name,description,pic_addr,canteen_id) values('KFC','Kentucky Fried chicken, burgers and rice bowls','',1);
+        insert into stalls (name,description,pic_addr,canteen_id) values('KFC','Kentucky Fried chicken, burgers and rice bowls','kfc.jpg',1);
         insert into stall_stall_types(stall_id, stall_type_id) values(5,3);
         
 
