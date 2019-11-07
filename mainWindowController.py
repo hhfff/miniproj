@@ -25,9 +25,12 @@ class MainWindowController():
         return datetime.weekday()+1
     def getTimeByDateTime(self,datetime):
         return datetime.strftime('%H:%M:%S')
+        #return '09:09:09'
 
     def getStalls(self,datetime):
         return Stall.fetchStalls(self.getDayIdByDateTime(datetime),self.getTimeByDateTime(datetime))
+
+    
     
 
     

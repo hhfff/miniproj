@@ -9,7 +9,7 @@
 
 from PyQt5 import QtCore, QtGui,QtWidgets
 from mainWindowController import MainWindowController
-
+from Stall_Info_Page import Ui_Stall_Info_Window
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -95,6 +95,7 @@ class Ui_MainWindow(object):
             
 
         self.retranslateUi(MainWindow)
+        self.updateDateTimeText(self.main_window_controller.selectedDateTime.strftime("%m/%d/%Y"),self.main_window_controller.selectedDateTime.strftime("%H:%M:%S"))
         self.pushButton.clicked.connect(self.openDateTimePicker)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -105,26 +106,27 @@ class Ui_MainWindow(object):
         self.lbl_canteen_name.setText(_translate("MainWindow", self.main_window_controller.canteen.name))
         self.ck_normal.setText(_translate("MainWindow", "Normal"))
         self.ck_fast_food.setText(_translate("MainWindow", "Fast Food"))
-        self.lbl_date.setText(_translate("MainWindow", "date"))
-        self.pushButton.setText(_translate("MainWindow", "PushButton"))
+        self.lbl_date.setText(_translate("MainWindow", 'datetime'))
+        self.pushButton.setText(_translate("MainWindow", "Select time"))
 
     def openDateTimePicker(self):
         print('test')
+
     def loadImage(self,image_url,isIcon=False):
         try:
             if isIcon:
                 return QtGui.QIcon(image_url) 
             else:
                 return QtGui.QPixmap(image_url)
-        except Exception as e:
+        except Exception:
             print('load image error')
 
     def displayStall(self):
+
         for item in self.main_window_controller.curr_stalls:
-            print(self.main_window_controller.image_url_prefix+item.pic_addr)
             btn=QtWidgets.QPushButton(item.name)
             btn.setMaximumSize(QtCore.QSize(100,100))
-            btn.clicked.connect(self.openStallDetail)
+            btn.clicked.connect(lambda checked,item=item: self.openStallDetail(item))
             icon=self.loadImage(self.main_window_controller.image_url_prefix+item.pic_addr,isIcon=True)
             btn.setIcon(icon)
             btn.setStyleSheet('''
@@ -137,16 +139,23 @@ class Ui_MainWindow(object):
 
             }
             ''')
+
             
-            self.gridLayout_stalls.addWidget(btn,0,0)
-        x,y=1,0
+            self.gridLayout_stalls.addWidget(btn)
+        '''x,y=1,0
         for i in range(5):
             self.gridLayout_stalls.addWidget(QtWidgets.QLabel(str(i)),y,x)
             x+=1
             if x>=3:
                 y+=1
-                x=0
+                x=0'''
 
-    def openStallDetail(self):
-        pass
+    def openStallDetail(self,stall):
+        self.Stall_Info_Window = QtWidgets.QMainWindow()
+        self.stallDetail = Ui_Stall_Info_Window()
+        self.stallDetail.setupUi(self.Stall_Info_Window,stall,self.main_window_controller)
+        self.Stall_Info_Window.show()
+
+    def updateDateTimeText(self,dateText,timeText):
+        self.lbl_date.setText(dateText+' '+timeText)
 

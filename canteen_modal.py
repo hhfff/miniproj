@@ -65,7 +65,8 @@ class Stall(ItemType):
         self.menu_items_by_day=[] 
     @staticmethod
     def fetchStalls(day_id,time):
-        query=f'''select stalls.id,stalls.name,stalls.description,stalls.pic_addr,stalls.canteen_id,operation_hours.day_id,days.name as day_name,operation_hours.start_time,operation_hours.end_time,group_concat(stall_types.name,',') as stall_type from stalls
+        #each store only has 1 store type, if not must use group concat
+        query=f'''select stalls.id,stalls.name,stalls.description,stalls.pic_addr,stalls.canteen_id,operation_hours.day_id,days.name as day_name,operation_hours.start_time,operation_hours.end_time, stall_types.name as stall_type from stalls
             inner join operation_hours 
             on stalls.id = operation_hours.stall_id
             inner join days 
@@ -77,6 +78,7 @@ class Stall(ItemType):
             where operation_hours.day_id={day_id}
             and time(operation_hours.start_time)<= time('{time}')
             and time('{time}') <=time(operation_hours.end_time)'''
+        #result will be list of dictionary, below
         #{'id': 1, 'name': 'Chicken Rice', 'description': 'Tender chicken', 'piame,start_time,end_time,picc_addr': '', 'canteen_id': 1, 'day_id': 1, 'day_name': 'Monday', 'start_time': '09:30:00', 'end_time': '19:30:00'}
         result=db.retrieve(query)
         return [Stall(data) for data in result]
@@ -89,6 +91,13 @@ class Stall(ItemType):
             '''
             rs=db.retrieve(query)
             [self.all_operation_hours.append(OperationHour(data['day_id'],data['name'],data['start_time'],data['end_time'])) for data in rs]
+    def getAllOperationHoursInString(self):
+        str=''
+        for operationHour in self.all_operation_hours:
+            s="{} {} - {}\n".format(operationHour.name,operationHour.start_time,operationHour.end_time)
+            str+=s
+        return str
+
     def fetchMenuByDay(self,day_id,time):
         #todo
         #menu item items column does't require

@@ -105,12 +105,12 @@ sqls = '''
         insert into operation_hours (stall_id,day_id,start_time,end_time) values(2,4,'09:30:00','19:00:00');
         insert into operation_hours (stall_id,day_id,start_time,end_time) values(2,5,'09:00:00','19:30:00');
 
-        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,1,'07:00:00','00:00:00');
-        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,2,'07:00:00','00:00:00');
-        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,3,'07:00:00','00:00:00');
-        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,4,'07:00:00','00:00:00');
-        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,5,'07:00:00','00:00:00');
-        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,6,'07:00:00','00:00:00');
+        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,1,'07:00:00','23:59:59');
+        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,2,'07:00:00','23:59:59');
+        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,3,'07:00:00','23:59:59');
+        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,4,'07:00:00','23:59:59');
+        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,5,'07:00:00','23:59:59');
+        insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,6,'07:00:00','23:59:59');
         insert into operation_hours (stall_id,day_id,start_time,end_time) values(3,7,'10:00:00','22:00:00');
         
         insert into operation_hours (stall_id,day_id,start_time,end_time) values(4,1,'08:30:00','20:30:00');
@@ -431,9 +431,13 @@ def retrieve(query):
         cursor.execute(query)
         desc = cursor.description
         column_names = [col[0] for col in desc]
+        data=cursor.fetchall()
+        #[(None, None, None, None, None, None, None, None, None, None)], sqlite will return this if no result
+        if data[0][0] == None:
+            return []
         # dictionary type, map column name with data
-        return [dict(zip(column_names, row)) for row in
-                cursor.fetchall()]  # a,b,c,d 1,2  -> a1,b1, if want c,d use izip_long
+        else:
+            return [dict(zip(column_names, row)) for row in data]  # a,b,c,d 1,2  -> a1,b1, if want c,d use izip_long
     except Exception as e:
         print(e)
     finally:
