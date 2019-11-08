@@ -155,38 +155,33 @@ class SelectDateTime(QtWidgets.QDialog, Ui_SelectDateTime):
     def __init__(self,mainWindowController):
         super(SelectDateTime, self).__init__()
         self.setupUi(self)
+        
+        # initialise mainWindowController 
         self.mainWindowController=mainWindowController
 
-        # when Confirm button is clicked, return day chosen by the user (print day of week, followed by date)
-        #self.pushButton_Confirm.clicked.connect(self.getDayOfWeek)
+        # when Confirm button is clicked, set system's date and time as chosen by the user
         self.pushButton_Confirm.clicked.connect(self.confirmClicked)
-        # when Confirm button is clicked, return time chosen by the user
 
         # when Confirm button is clicked, close the dialog window
         self.pushButton_Confirm.clicked.connect(self.close)
         # when Back button is clicked, close the dialog window
         self.pushButton_Back.clicked.connect(self.close)
-
-    # following functions are to return selected date and time on the
-    # MainWindow UI and Stall Information UI where stall's information
-    # will be printed according to the user's chosen date and time
+    
+    # this function is to obtain a string of user's selected date and time, 
+    # and convert it to datetime object in python to set as system's datetime
+    def confirmClicked(self):
+        # convert date and time chosen by user into one string
+        dateTimeString=self.userChosenDate()+' '+self.userChosenTime()
+        # set the chosen date and time as the system's date and time
+        self.mainWindowController.setSelectTime(datetime.strptime(dateTimeString,'%d/%m/%Y %H:%M:%S'))
 
     # this function is to return user chosen date from the calendarWidget widget
-    def confirmClicked(self):
-        '''q_date=self.calendarWidget.selectedDate()
-        q_time=self.timeEdit.time()
-        q_dateTime=QtCore.QDateTime(q_date,q_time)'''
-        dateTimeString=self.userChosenDate()+' '+self.userChosenTime()
-
-
-        self.mainWindowController.setSelectTime(datetime.strptime(dateTimeString,'%d/%B/%Y %H:%M:%S'))
-
     def userChosenDate(self):
         # obtain selected date from calendar widget and convert it to string
-        date = self.calendarWidget.selectedDate().toString("dd/MMMM/yyyy")
+        date = self.calendarWidget.selectedDate().toString("dd/MM/yyyy")
         #print(self.date)  # for checking in terminal
         return date
-        # example: returns 13/10/2019, Sunday
+        # example: returns 13/10/2019
 
     # this function is to return user chosen time from the timeWidget
     def userChosenTime(self):
@@ -194,18 +189,8 @@ class SelectDateTime(QtWidgets.QDialog, Ui_SelectDateTime):
         time = self.timeEdit.time().toString("HH:mm:ss")
         #print(self.time)  # for checking in terminal
         return time
-        # example: returns 12:00 if user selects 12:00
-
-    # this function returns day of the week chosen by the user
-    # day of the week is needed to determine the operating hours for the day
-    def getDayOfWeek(self):
-        # split the date string from userChosenDate into a list = ['dddd',' dd MMMM','yyyy']
-        chosenDate = self.userChosenDate().split()
-        # get string for day of the week --- 'dddd'
-        chosenDay = chosenDate[0][:-1]
-        print(chosenDay)
-        return chosenDay
-        # example: returns Sunday
+        # example: returns 12:00 if user selects 12:00 / 12:00 PM
+        
 
 if __name__ == "__main__":
     import sys
