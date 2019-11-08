@@ -1,22 +1,16 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file '.\SelectDateTime2.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 
+# create UI for SelectDateTime dialog (separate window)
 class Ui_SelectDateTime(object):
     def setupUi(self, SelectDateTime,mainWindowController):
         self.mainWindowController=mainWindowController
         SelectDateTime.setObjectName("SelectDateTime")
         SelectDateTime.resize(616, 497)
+
         self.verticalLayout = QtWidgets.QVBoxLayout(SelectDateTime)
         self.verticalLayout.setObjectName("verticalLayout")
+
         self.label_titleDate = QtWidgets.QLabel(SelectDateTime)
         font = QtGui.QFont()
         font.setFamily("Poor Richard")
@@ -31,6 +25,7 @@ class Ui_SelectDateTime(object):
         self.label_titleDate.setAlignment(QtCore.Qt.AlignCenter)
         self.label_titleDate.setObjectName("label_titleDate")
         self.verticalLayout.addWidget(self.label_titleDate)
+
         self.calendarWidget = QtWidgets.QCalendarWidget(SelectDateTime)
         font = QtGui.QFont()
         font.setFamily("Century Gothic")
@@ -56,6 +51,7 @@ class Ui_SelectDateTime(object):
         self.calendarWidget.setVerticalHeaderFormat(QtWidgets.QCalendarWidget.NoVerticalHeader)
         self.calendarWidget.setObjectName("calendarWidget")
         self.verticalLayout.addWidget(self.calendarWidget)
+
         self.label_titleTime = QtWidgets.QLabel(SelectDateTime)
         font = QtGui.QFont()
         font.setFamily("Poor Richard")
@@ -69,6 +65,7 @@ class Ui_SelectDateTime(object):
         self.label_titleTime.setWordWrap(False)
         self.label_titleTime.setObjectName("label_titleTime")
         self.verticalLayout.addWidget(self.label_titleTime)
+
         self.timeEdit = QtWidgets.QTimeEdit(SelectDateTime)
         font = QtGui.QFont()
         font.setFamily("Trebuchet MS")
@@ -77,9 +74,13 @@ class Ui_SelectDateTime(object):
         font.setWeight(75)
         self.timeEdit.setFont(font)
         self.timeEdit.setAlignment(QtCore.Qt.AlignCenter)
-        self.timeEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(2019, 11, 6), QtCore.QTime(15, 0, 0)))
+        self.timeEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(datetime.now().year, datetime.now().month,
+                                                                int(datetime.now().day)),
+                                                   QtCore.QTime(datetime.now().hour, datetime.now().minute,
+                                                                datetime.now().second)))
         self.timeEdit.setObjectName("timeEdit")
         self.verticalLayout.addWidget(self.timeEdit)
+
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(10, 15, 10, 15)
         self.horizontalLayout.setSpacing(30)
@@ -136,17 +137,37 @@ class Ui_SelectDateTime(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi(SelectDateTime)
-        self.pushButton_Confirm.clicked.connect(SelectDateTime.accept)
-        self.pushButton_Back.clicked.connect(SelectDateTime.reject)
         QtCore.QMetaObject.connectSlotsByName(SelectDateTime)
 
         # when Confirm button is clicked, return day chosen by the user (print date, followed by day)
         self.pushButton_Confirm.clicked.connect(self.comfirmClicked)
+    def retranslateUi(self, SelectDateTime):
+        _translate = QtCore.QCoreApplication.translate
+        SelectDateTime.setWindowTitle(_translate("SelectDateTime", "Canteen System"))
+        self.label_titleDate.setText(_translate("SelectDateTime", "Set Preferred Date"))
+        self.label_titleTime.setText(_translate("SelectDateTime", "Set Preferred Time ( hh : mm )"))
+        self.pushButton_Back.setText(_translate("SelectDateTime", "Back"))
+        self.pushButton_Confirm.setText(_translate("SelectDateTime", "Confirm"))
+
+
+class SelectDateTime(QtWidgets.QDialog, Ui_SelectDateTime):
+    # initialise dialog window and connect functions with the buttons
+    def __init__(self):
+        super(SelectDateTime, self).__init__()
+        self.setupUi(self)
+
+        # when Confirm button is clicked, return day chosen by the user (print day of week, followed by date)
+        self.pushButton_Confirm.clicked.connect(self.getDayOfWeek)
         # when Confirm button is clicked, return time chosen by the user
 
-        # 2 functions to return selected date and time on the
-        # MainWindow UI / New Window UI where stall's information
-        # will be printed according to the user chosen date and time
+        # when Confirm button is clicked, close the dialog window
+        self.pushButton_Confirm.clicked.connect(self.close)
+        # when Back button is clicked, close the dialog window
+        self.pushButton_Back.clicked.connect(self.close)
+
+    # following functions are to return selected date and time on the
+    # MainWindow UI and Stall Information UI where stall's information
+    # will be printed according to the user's chosen date and time
 
     # this function is to return user chosen date from the calendarWidget widget
     def comfirmClicked(self):
@@ -171,6 +192,7 @@ class Ui_SelectDateTime(object):
         # example: returns 12:00 if user selects 12:00
 
     # this function returns day of the week chosen by the user
+    # day of the week is needed to determine the operating hours for the day
     def getDayOfWeek(self):
         # split the date string from userChosenDate into a list = ['dddd',' dd MMMM','yyyy']
         chosenDate = self.userChosenDate().split()
@@ -180,20 +202,9 @@ class Ui_SelectDateTime(object):
         return chosenDay
         # example: returns Sunday
 
-    def retranslateUi(self, SelectDateTime):
-        _translate = QtCore.QCoreApplication.translate
-        SelectDateTime.setWindowTitle(_translate("SelectDateTime", "Canteen System"))
-        self.label_titleDate.setText(_translate("SelectDateTime", "Set Preferred Date"))
-        self.label_titleTime.setText(_translate("SelectDateTime", "Set Preferred Time ( hh : mm )"))
-        self.pushButton_Back.setText(_translate("SelectDateTime", "Back"))
-        self.pushButton_Confirm.setText(_translate("SelectDateTime", "Confirm"))
-
-
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    SelectDateTime = QtWidgets.QDialog()
-    ui = Ui_SelectDateTime()
-    ui.setupUi(SelectDateTime)
-    SelectDateTime.show()
+    SelectDateTimeDialog = SelectDateTime()
+    SelectDateTimeDialog.show()
     sys.exit(app.exec_())
