@@ -81,6 +81,7 @@ class Stall(ItemType):
         #result will be list of dictionary, below
         #{'id': 1, 'name': 'Chicken Rice', 'description': 'Tender chicken', 'piame,start_time,end_time,picc_addr': '', 'canteen_id': 1, 'day_id': 1, 'day_name': 'Monday', 'start_time': '09:30:00', 'end_time': '19:30:00'}
         result=db.retrieve(query)
+        print(result,'ssssssss')
         return [Stall(data) for data in result]
     def fetchAllOperationHours(self):
         if len(self.all_operation_hours) <=0:

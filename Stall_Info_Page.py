@@ -117,7 +117,7 @@ class Ui_Stall_Info_Window(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_price_title.setFont(font)
-        self.label_price_title.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.label_price_title.setAlignment( QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.label_price_title.setIndent(15)
         self.label_price_title.setObjectName("label_price_title")
         self.menuGrid.addWidget(self.label_price_title, 0, 1, 1, 1)

@@ -424,7 +424,8 @@ def insert():
 
 
 def retrieve(query):
-    print(query)
+    #print(query)
+    dataList=[]
     try:
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
@@ -432,17 +433,17 @@ def retrieve(query):
         desc = cursor.description
         column_names = [col[0] for col in desc]
         data=cursor.fetchall()
+       
         #[(None, None, None, None, None, None, None, None, None, None)], sqlite will return this if no result
-        if data[0][0] == None:
-            return []
-        # dictionary type, map column name with data
-        else:
-            return [dict(zip(column_names, row)) for row in data]  # a,b,c,d 1,2  -> a1,b1, if want c,d use izip_long
+        print(data,'---------------------')
+        if data[0][0] != None or len(data)!=0:
+            
+            dataList=[dict(zip(column_names, row)) for row in data]  # a,b,c,d 1,2  -> a1,b1, if want c,d use izip_long
     except Exception as e:
         print(e)
     finally:
         conn.close()
-
+    return dataList
 
 def update():
     pass

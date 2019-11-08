@@ -35,7 +35,7 @@ class MainWindowController():
         #todo check equal
         self.selectedDateTime=newValue
         self.getStalls(self.selectedDateTime)
-        self.mainUi.updateDateTimeText(self.selectedDateTime.strftime("%m/%d/%Y %H:%M:%S"))
+        self.mainUi.updateDateTimeText(self.selectedDateTime)
         self.mainUi.displayStall()
     
 

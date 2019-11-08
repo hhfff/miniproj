@@ -3,8 +3,7 @@ from datetime import datetime
 
 # create UI for SelectDateTime dialog (separate window)
 class Ui_SelectDateTime(object):
-    def setupUi(self, SelectDateTime,mainWindowController):
-        self.mainWindowController=mainWindowController
+    def setupUi(self, SelectDateTime):
         SelectDateTime.setObjectName("SelectDateTime")
         SelectDateTime.resize(616, 497)
 
@@ -73,6 +72,7 @@ class Ui_SelectDateTime(object):
         font.setBold(True)
         font.setWeight(75)
         self.timeEdit.setFont(font)
+        self.timeEdit.setWrapping(True)
         self.timeEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.timeEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(datetime.now().year, datetime.now().month,
                                                                 int(datetime.now().day)),
@@ -140,24 +140,26 @@ class Ui_SelectDateTime(object):
         QtCore.QMetaObject.connectSlotsByName(SelectDateTime)
 
         # when Confirm button is clicked, return day chosen by the user (print date, followed by day)
-        self.pushButton_Confirm.clicked.connect(self.comfirmClicked)
+        #self.pushButton_Confirm.clicked.connect(self.comfirmClicked)
     def retranslateUi(self, SelectDateTime):
         _translate = QtCore.QCoreApplication.translate
         SelectDateTime.setWindowTitle(_translate("SelectDateTime", "Canteen System"))
         self.label_titleDate.setText(_translate("SelectDateTime", "Set Preferred Date"))
-        self.label_titleTime.setText(_translate("SelectDateTime", "Set Preferred Time ( hh : mm )"))
+        self.label_titleTime.setText(_translate("SelectDateTime", "Set Preferred Time"))
         self.pushButton_Back.setText(_translate("SelectDateTime", "Back"))
         self.pushButton_Confirm.setText(_translate("SelectDateTime", "Confirm"))
 
 
 class SelectDateTime(QtWidgets.QDialog, Ui_SelectDateTime):
     # initialise dialog window and connect functions with the buttons
-    def __init__(self):
+    def __init__(self,mainWindowController):
         super(SelectDateTime, self).__init__()
         self.setupUi(self)
+        self.mainWindowController=mainWindowController
 
         # when Confirm button is clicked, return day chosen by the user (print day of week, followed by date)
-        self.pushButton_Confirm.clicked.connect(self.getDayOfWeek)
+        #self.pushButton_Confirm.clicked.connect(self.getDayOfWeek)
+        self.pushButton_Confirm.clicked.connect(self.confirmClicked)
         # when Confirm button is clicked, return time chosen by the user
 
         # when Confirm button is clicked, close the dialog window
@@ -170,25 +172,28 @@ class SelectDateTime(QtWidgets.QDialog, Ui_SelectDateTime):
     # will be printed according to the user's chosen date and time
 
     # this function is to return user chosen date from the calendarWidget widget
-    def comfirmClicked(self):
-        q_date=self.calendarWidget.selectedDate()
+    def confirmClicked(self):
+        '''q_date=self.calendarWidget.selectedDate()
         q_time=self.timeEdit.time()
-        q_dateTime=QtCore.QDateTime(q_date,q_time)
-        self.mainWindowController.setSelectTime(q_dateTime.toPyDateTime())
+        q_dateTime=QtCore.QDateTime(q_date,q_time)'''
+        dateTimeString=self.userChosenDate()+' '+self.userChosenTime()
+
+
+        self.mainWindowController.setSelectTime(datetime.strptime(dateTimeString,'%d/%B/%Y %H:%M:%S'))
 
     def userChosenDate(self):
         # obtain selected date from calendar widget and convert it to string
-        self.date = self.calendarWidget.selectedDate().toString("dddd, dd MMMM, yyyy")
-        print(self.date)  # for checking in terminal
-        return self.date
+        date = self.calendarWidget.selectedDate().toString("dd/MMMM/yyyy")
+        #print(self.date)  # for checking in terminal
+        return date
         # example: returns 13/10/2019, Sunday
 
     # this function is to return user chosen time from the timeWidget
     def userChosenTime(self):
         # obtain selected time from timeEdit widget and convert it to string
-        self.time = self.timeEdit.time().toString("HH:mm:ss")
-        print(self.time)  # for checking in terminal
-        return self.time
+        time = self.timeEdit.time().toString("HH:mm:ss")
+        #print(self.time)  # for checking in terminal
+        return time
         # example: returns 12:00 if user selects 12:00
 
     # this function returns day of the week chosen by the user
@@ -205,6 +210,6 @@ class SelectDateTime(QtWidgets.QDialog, Ui_SelectDateTime):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    SelectDateTimeDialog = SelectDateTime()
+    SelectDateTimeDialog = SelectDateTime('h')
     SelectDateTimeDialog.show()
     sys.exit(app.exec_())
