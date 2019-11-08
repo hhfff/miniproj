@@ -28,13 +28,13 @@ int_hourTime = int(now.strftime("%H"))
 
 #using the hour to set random waiting time from 5 to 10 mins if peakhour and 2 to 5 min if non peak hour
 if int_hourTime >= 7 and int_hourTime < 9:
-    int_avgWaittime = random.randint(5, 10)
-elif int_hourTime >= 12 and int_hourTime < 14:
-    int_avgWaittime = random.randint(5, 10)
-elif int_hourTime >= 17 and int_hourTime < 19:
-    int_avgWaittime = random.randint(5, 10)
-else:
     int_avgWaittime = random.randint(2, 5)
+elif int_hourTime >= 12 and int_hourTime < 14:
+    int_avgWaittime = random.randint(2, 5)
+elif int_hourTime >= 17 and int_hourTime < 19:
+    int_avgWaittime = random.randint(2, 5)
+else:
+    int_avgWaittime = random.randint(1, 3)
 str_avgWaittime = str(int_avgWaittime)
 
 
