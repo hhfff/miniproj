@@ -49,7 +49,7 @@ class Ui_Stall_Info_Window(object):
             self.int_avgWaittime = random.randint(2, 5)
         else:
             self.int_avgWaittime = random.randint(1, 3)
-            self.str_avgWaittime = str(self.int_avgWaittime)
+        self.str_avgWaittime = str(self.int_avgWaittime)
 
         self.Stall_Info_Window = Stall_Info_Window
         Stall_Info_Window.setObjectName("Stall_Info_Window")
