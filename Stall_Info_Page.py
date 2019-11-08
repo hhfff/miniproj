@@ -41,14 +41,14 @@ class Ui_Stall_Info_Window(object):
         self.stall.fetchMenuByDay(mainWindowController.getDayIdByDateTime(self.selectedDatetime),mainWindowController.getTimeByDateTime(self.selectedDatetime))
         int_hourTime=int(self.selectedDatetime.strftime("%H"))
         if int_hourTime >= 7 and int_hourTime < 9:
-            int_avgWaittime = random.randint(2, 5)
+            self.int_avgWaittime = random.randint(2, 5)
         elif int_hourTime >= 12 and int_hourTime < 14:
-            int_avgWaittime = random.randint(4, 5)
+            self.int_avgWaittime = random.randint(4, 5)
         elif int_hourTime >= 17 and int_hourTime < 19:
-            int_avgWaittime = random.randint(2, 5)
+            self.int_avgWaittime = random.randint(2, 5)
         else:
-            int_avgWaittime = random.randint(1, 3)
-            str_avgWaittime = str(int_avgWaittime)
+            self.int_avgWaittime = random.randint(1, 3)
+            self.str_avgWaittime = str(self.int_avgWaittime)
 
 
         self.Stall_Info_Window=Stall_Info_Window
@@ -202,7 +202,7 @@ class Ui_Stall_Info_Window(object):
         timer.start(1000)
 
         #fetch Stall information from canteen_modal
-        currentTime = now.strftime("%H:%M:%S") #to get current Time once
+        currentTime = datetime.now().strftime("%H:%M:%S") #to get current Time once
 
         
             
@@ -223,7 +223,7 @@ class Ui_Stall_Info_Window(object):
         self.label_menu_title.setText(_translate("Stall_Info_Window", "Menu"))
         self.label_price_title.setText(_translate("Stall_Info_Window", "Price"))
         #self.btn_calcWaitTime.setText(_translate("Stall_Info_Window", "Calculate Waiting Time"))
-        self.label_avgWait.setText(_translate("Stall_Info_Window", "Average waiting time per person: " + str_avgWaittime + " minutes"))
+        self.label_avgWait.setText(_translate("Stall_Info_Window", "Average waiting time per person: " + self.str_avgWaittime + " minutes"))
         self.label_numPeople.setText(_translate("Stall_Info_Window", "Number of people in queue: "))
         self.textbox_userIP_numPpl.setPlaceholderText("Type number of people in Queue")
 
@@ -260,7 +260,7 @@ class Ui_Stall_Info_Window(object):
 
             #if all conditions met caclculate waiting time and show the label
             else:
-                result = str(int_avgWaittime * userInput_Ppl)
+                result = str(self.int_avgWaittime * userInput_Ppl)
                 self.label_calcWaitTime.show()
                 self.label_resultWaitTime.show()
                 self.label_resultWaitTime.setText(result + " minutes")
