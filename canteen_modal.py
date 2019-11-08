@@ -63,6 +63,7 @@ class Stall(ItemType):
         self.stall_types=data['stall_type'].split(',')
 
         self.menu_items_by_day=[] 
+
     @staticmethod
     def fetchStalls(day_id,time):
         #each store only has 1 store type, if not must use group concat
@@ -83,6 +84,7 @@ class Stall(ItemType):
         result=db.retrieve(query)
         print(result,'ssssssss')
         return [Stall(data) for data in result]
+
     def fetchAllOperationHours(self):
         if len(self.all_operation_hours) <=0:
             query=f'''select operation_hours.day_id, days.name,operation_hours.start_time,operation_hours.end_time from operation_hours
@@ -115,6 +117,7 @@ class Stall(ItemType):
                 ;
         '''
         self.menu_items_by_day=[ MenuItem(data) for data in db.retrieve(query)]
+        
     def fetchAllMenu(self):
         pass
         

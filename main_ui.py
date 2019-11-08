@@ -106,7 +106,7 @@ class Ui_MainWindow(object):
         self.ck_normal.setText(_translate("MainWindow", "Normal"))
         self.ck_fast_food.setText(_translate("MainWindow", "Fast Food"))
         self.lbl_date.setText(_translate("MainWindow", 'datetime'))
-        self.pushButton.setText(_translate("MainWindow", "Select time"))
+        self.pushButton.setText(_translate("MainWindow", "Select date and time"))
 
     def openDateTimePicker(self):
         self.SelectDateTime = SelectDateTime( self.main_window_controller)

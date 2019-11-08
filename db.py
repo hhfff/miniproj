@@ -435,7 +435,6 @@ def retrieve(query):
         data=cursor.fetchall()
        
         #[(None, None, None, None, None, None, None, None, None, None)], sqlite will return this if no result
-        print(data,'---------------------')
         if data[0][0] != None or len(data)!=0:
             
             dataList=[dict(zip(column_names, row)) for row in data]  # a,b,c,d 1,2  -> a1,b1, if want c,d use izip_long
