@@ -263,9 +263,6 @@ class Ui_Stall_Info_Window(object):
 
     # function to show error message, function requires parameter of error message to show
     def error_message(self, message):
-        # disable Stall Page
-        # self.Stall_Info_Window.setEnabled(False)
-
         # create error pop uop
         # q messagebox auto block parent window
         msg = QMessageBox()
@@ -276,10 +273,9 @@ class Ui_Stall_Info_Window(object):
         msg.exec()
 
         # hide calculated label, clear user inputted text, enable Stall Page after user click ok
-        ##self.label_resultWaitTime.hide()
-        # self.textbox_userIP_numPpl.setText("")
-        # self.Stall_Info_Window.setEnabled(True)
-        # return()
+        self.label_calcWaitTime.hide()
+        self.label_resultWaitTime.hide()
+        self.textbox_userIP_numPpl.setText("")
 
     # function to do when home button is clicked, no parameter is required
     def func_home(self):
