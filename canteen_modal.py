@@ -78,7 +78,7 @@ class Stall(ItemType):
 			on stall_stall_types.stall_type_id=stall_types.id
             where operation_hours.day_id={}
             and time(operation_hours.start_time)<= time('{}')
-            and time('{}') <=time(operation_hours.end_time)'''.format(day_id,time,time)
+            and time('{}') <=time(operation_hours.end_time) order by stalls.name'''.format(day_id,time,time)
         #result will be list of dictionary, below
         #{'id': 1, 'name': 'Chicken Rice', 'description': 'Tender chicken', 'piame,start_time,end_time,picc_addr': '', 'canteen_id': 1, 'day_id': 1, 'day_name': 'Monday', 'start_time': '09:30:00', 'end_time': '19:30:00'}
         result=db.retrieve(query)
@@ -113,6 +113,7 @@ class Stall(ItemType):
                 AND days.id={}
                 AND time(menu_items_time.start_time)<='{}'
                 AND '{}'<=time(menu_items_time.end_time)
+                order by menu_items.name
                 ;
         '''.format(self.id,day_id,time,time)
         self.menu_items_by_day=[ MenuItem(data) for data in db.retrieve(query)]

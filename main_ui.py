@@ -16,55 +16,98 @@ class Ui_MainWindow(object):
         #init controller
         self.main_window_controller=MainWindowController(self)
         #MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground,True)
-        #MainWindow.setStyleSheet("background-color:rgba(255,255,255,0.9)")
+        #MainWindow.setStyleSheet("background-color:rgba(0,0,0,0.9)")
 
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         #self.centralwidget.setGraphicsEffect(QtWidgets.QGraphicsBlurEffect())
+        self.centralwidget.setObjectName("centralwidget")   
+        self.centralwidget.setStyleSheet('''
+            #centralwidget{
+                
+            }
+        ''')
 
-        self.centralwidget.setObjectName("centralwidget")
+        
+        
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
+        
+
         self.lbl_canteen_name = QtWidgets.QLabel(self.centralwidget)
         self.lbl_canteen_name.setObjectName("lbl_canteen_name")
+        self.lbl_canteen_name.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.lbl_canteen_name.setStyleSheet('''
+        QLabel{
+            color: #aa00ff;
+            font-size:20px;
+            font-weight:bold;
+
+            }''')
         self.verticalLayout.addWidget(self.lbl_canteen_name)
+
+        
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
+        
+
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+
         self.ck_normal = QtWidgets.QCheckBox(self.centralwidget)
         self.ck_normal.setObjectName("ck_normal")
         self.verticalLayout_2.addWidget(self.ck_normal)
+
         self.ck_fast_food = QtWidgets.QCheckBox(self.centralwidget)
         self.ck_fast_food.setObjectName("ck_fast_food")
         self.verticalLayout_2.addWidget(self.ck_fast_food)
+
         self.horizontalLayout.addLayout(self.verticalLayout_2)
+
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.horizontalLayout.addLayout(self.verticalLayout_3)
+
+        #select data time button and label
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
+
         self.lbl_date = QtWidgets.QLabel(self.centralwidget)
         self.lbl_date.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_date.setObjectName("lbl_date")
         self.verticalLayout_4.addWidget(self.lbl_date)
+
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout_4.addWidget(self.pushButton)
+
         self.horizontalLayout.addLayout(self.verticalLayout_4)
+        
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.verticalLayout_5.addLayout(self.verticalLayout)
+
+        
+
+        self.topAreaWidget=QtWidgets.QWidget()
+        self.topAreaWidget.setObjectName("topAreaWidget")
+        self.topAreaWidget.setLayout(self.verticalLayout)
+        self.topAreaWidget.setStyleSheet('''
+            #topAreaWidget{
+                background:white;
+            }
+        ''')
+        self.verticalLayout_5.addWidget(self.topAreaWidget)
+
 
 
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 784, 533))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 784, 550))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
 
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.scrollAreaWidgetContents)
