@@ -15,11 +15,6 @@ from canteen_modal import Stall
 from DigitalClockWidget import DigitalClock
 import random
 
-'''Left to do:
-    - Need label for selected time and date?
-    - If statement for selected time | else do curret 
-    - Append menu items and stuff from database'''
-
 
 # need write if statement for selected time
 

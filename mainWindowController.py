@@ -15,7 +15,6 @@ class MainWindowController():
         self.canteen=Canteen.all()[0]
         self.all_stalls=[]
         self.getStalls(self.selectedDateTime)
-        
         #self.selectedDateTime=datetime.datetime.fromtimestamp(self.currentDatetime)
 
     def getCurrentSystemTime(self):
@@ -30,13 +29,35 @@ class MainWindowController():
 
     def getStalls(self,datetime):
         self.curr_stalls=Stall.fetchStalls(self.getDayIdByDateTime(datetime),self.getTimeByDateTime(datetime))
+    def useCurrentDateTime(self):
+        self.currentDatetime=self.getCurrentSystemTime()
+        self.setSelectTime(self.currentDatetime)
 
     def setSelectTime(self,newValue):
         #todo check equal
         self.selectedDateTime=newValue
         self.getStalls(self.selectedDateTime)
         self.mainUi.updateDateTimeText(self.selectedDateTime)
-        self.mainUi.displayStall()
+        self.mainUi.onSearchTextChange()
+        
+    #non hala,fast food and halal , but since we only has fast food and other
+    def filterStore(self,text,fastfoodChecked,nonfastFoodChecked):
+        filteredStore=[] #reset
+        for store in self.curr_stalls:
+            if store.name.lower().find(text.lower()) !=-1:
+                if fastfoodChecked:
+                    if store.stall_types[0]=='Fast Food':
+                        filteredStore.append(store)
+                if nonfastFoodChecked:
+                    if store.stall_types[0]!='Fast Food':
+                        filteredStore.append(store)
+                
+            
+        self.mainUi.displayStall(filteredStore)
+        
+        
+        
+
     
 
     
