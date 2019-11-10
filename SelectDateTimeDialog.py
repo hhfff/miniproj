@@ -36,11 +36,10 @@ class Ui_SelectDateTime(object):
         self.calendarWidget.setAutoFillBackground(False)
         self.calendarWidget.setStyleSheet("color: rgb(0, 0, 0);\n"
 "font: 75 11pt \"Century Gothic\";\n"
-"selection-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
 "selection-background-color: rgb(85, 170, 255);\n"
 "border-color: rgb(170, 85, 0);\n"
-"alternate-background-color: rgb(170, 255, 255);\n"
-"background-color: rgb(238, 255, 246);")
+"alternate-background-color: rgb(164, 255, 237);")
         self.calendarWidget.setMinimumDate(
             QtCore.QDate(datetime.now().year, datetime.now().month, int(datetime.now().day)))
         self.calendarWidget.setMaximumDate(QtCore.QDate(2030, 12, 31))
