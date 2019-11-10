@@ -98,7 +98,9 @@ class Ui_Stall_Info_Window(object):
         self.label_stallOpHour = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_stallOpHour.setObjectName("label_stallOpHour")
         self.stallGrid.addWidget(self.label_stallOpHour, 2, 0, 1, 1)
-
+        self.label_selectedDateTime = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.stallGrid.addWidget(self.label_selectedDateTime, 3, 0, 1, 1)
+        
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.windowFrame)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(10, 280, 791, 291))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
@@ -210,7 +212,10 @@ class Ui_Stall_Info_Window(object):
         self.label_stallDesc.setText(_translate("Stall_Info_Window", "Description: " + self.stall.description))
         self.label_stallOpHour.setText(
             _translate("Stall_Info_Window", "Full Operation Hours:\n" + self.stall.getAllOperationHoursInString()))
-
+        self.label_selectedDateTime.setText(
+            _translate(
+                "Stall_Info_Window", "Selected Date and Time: " + self.selectedDatetime.strftime("%A %d/%m/%Y, %H:%M")))
+        
         # self.list_menu_items.append()
         self.label_calcWaitTime.setText("Estimated Waiting Time: ")
         self.label_calcWaitTime.hide()
