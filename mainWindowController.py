@@ -41,19 +41,18 @@ class MainWindowController():
         self.mainUi.onSearchTextChange()
         
     #non hala,fast food and halal , but since we only has fast food and other
-    def filterStore(self,text,fastfoodChecked,nonfastFoodChecked):
-        filteredStore=[] #reset
-        for store in self.curr_stalls:
-            if store.name.lower().find(text.lower()) !=-1:
+    def filterStall(self, text, fastfoodChecked, nonfastFoodChecked):
+        filteredStall = []  # reset
+        for stall in self.curr_stalls:
+            if stall.name.lower().find(text.lower()) != -1:
                 if fastfoodChecked:
-                    if store.stall_types[0]=='Fast Food':
-                        filteredStore.append(store)
+                    if stall.stall_types[0] == 'Fast Food':
+                        filteredStall.append(stall)
                 if nonfastFoodChecked:
-                    if store.stall_types[0]!='Fast Food':
-                        filteredStore.append(store)
-                
-            
-        self.mainUi.displayStall(filteredStore)
+                    if stall.stall_types[0] != 'Fast Food':
+                        filteredStall.append(stall)
+
+        self.mainUi.displayStall(filteredStall)
         
         
         
