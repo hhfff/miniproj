@@ -3,7 +3,7 @@ class BaseObject:
     def __init__(self,id,name):
         self.id=id
         self.name=name
-        
+    #example:   Day.all will return all the data in Day table in database
     @classmethod
     def all(cls):
         target_class=globals()[cls.__name__]
@@ -93,6 +93,7 @@ class Stall(ItemType):
             '''.format(self.id)
             rs=db.retrieve(query)
             [self.all_operation_hours.append(OperationHour(data['day_id'],data['name'],data['start_time'],data['end_time'])) for data in rs]
+    #for stall detail page use
     def getAllOperationHoursInString(self):
         str=''
         for operationHour in self.all_operation_hours:
@@ -119,7 +120,16 @@ class Stall(ItemType):
         self.menu_items_by_day=[ MenuItem(data) for data in db.retrieve(query)]
         
     def fetchAllMenu(self):
-        pass
+        query='''SELECT menu_items.id,menu_items.name,menu_items.description,menu_items.pic_addr,menu_items.price,menu_items.stall_id,menu_items_time.day_id, days.name as day_name,menu_items_time.start_time,menu_items_time.end_time from menu_items 
+                INNER JOIN menu_items_time 
+                on menu_items.id=menu_items_time.menu_item_id
+                INNER JOIN days
+                on menu_items_time.day_id=days.id
+                WHERE menu_items.stall_id={}
+				group by menu_items.id
+                order by menu_items.name;
+        '''.format(self.id)
+        self.menu_items_by_day=[ MenuItem(data) for data in db.retrieve(query)]
         
 
 class MenuItem(ItemType):

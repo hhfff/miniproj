@@ -33,8 +33,8 @@ class Ui_Stall_Info_Window(object):
         # get stall all operations and menuitems
         self.stall.fetchAllOperationHours()
         self.selectedDatetime = mainWindowController.selectedDateTime
-        self.stall.fetchMenuByDay(mainWindowController.getDayIdByDateTime(self.selectedDatetime),
-                                  mainWindowController.getTimeByDateTime(self.selectedDatetime))
+        
+        
         int_hourTime = int(self.selectedDatetime.strftime("%H"))
         if int_hourTime >= 7 and int_hourTime < 9:
             self.int_avgWaittime = random.randint(2, 5)
@@ -131,12 +131,20 @@ class Ui_Stall_Info_Window(object):
         self.label_price_title.setIndent(15)
         self.label_price_title.setObjectName("label_price_title")
         self.menuGrid.addWidget(self.label_price_title, 0, 1, 1, 1)
+        self.selectCombobox=QtWidgets.QComboBox()
+        self.selectCombobox.addItem("All")
+        self.selectCombobox.addItem("Current time")
+        self.selectCombobox.addItem("Selected time")
+        self.selectCombobox.activated[str].connect(self.onComboBoxChange)
+        self.menuGrid.addWidget(self.selectCombobox, 0, 2, 1, 1)
+
+
         self.list_menu_items = QtWidgets.QTextBrowser(self.gridLayoutWidget_2)
         self.list_menu_items.setObjectName("list_menu_items")
         self.menuGrid.addWidget(self.list_menu_items, 1, 0, 1, 1)
         self.list_price_details = QtWidgets.QTextBrowser(self.gridLayoutWidget_2)
         self.list_price_details.setObjectName("list_price_details")
-        self.menuGrid.addWidget(self.list_price_details, 1, 1, 1, 1)
+        self.menuGrid.addWidget(self.list_price_details, 1, 1, 1, 2)
         self.menuGrid.setColumnStretch(0, 5)
         self.line = QtWidgets.QFrame(self.windowFrame)
         self.line.setGeometry(QtCore.QRect(-10, 260, 981, 20))
@@ -184,16 +192,12 @@ class Ui_Stall_Info_Window(object):
         self.statusbar.setObjectName("statusbar")
         Stall_Info_Window.setStatusBar(self.statusbar)
 
+        self.selectCombobox.setCurrentIndex(0)
+        self.onComboBoxChange("All")
+
+
         self.retranslateUi(Stall_Info_Window)
-        menuItem_str = ''
-        price_str = ''
-        for menuItem in self.stall.menu_items_by_day:
-            menuItem_str = menuItem_str + menuItem.name + "\n"
-            price_str = price_str + "${}\n".format(menuItem.price)
-        print(menuItem_str)
-        print(price_str)
-        self.list_menu_items.setText(menuItem_str)
-        self.list_price_details.setText(price_str)
+        
         QtCore.QMetaObject.connectSlotsByName(Stall_Info_Window)
 
     def retranslateUi(self, Stall_Info_Window):
@@ -276,6 +280,26 @@ class Ui_Stall_Info_Window(object):
     def func_home(self):
         # Stall_Info_Window.close()
         sys.exit(app.exec_())
+    def onComboBoxChange(self,text):
+        print(text)
+        if text =="All":
+            self.stall.fetchAllMenu()
+        elif text =="Current time":
+            currentTime = datetime.now()
+            self.stall.fetchMenuByDay(self.mainWindowController.getDayIdByDateTime(currentTime),
+                                  self.mainWindowController.getTimeByDateTime(currentTime))
+        elif text =="Selected time":
+            self.stall.fetchMenuByDay(self.mainWindowController.getDayIdByDateTime(self.selectedDatetime),
+                                  self.mainWindowController.getTimeByDateTime(self.selectedDatetime))
+        self.displayMenus()
+    def displayMenus(self):
+        menuItem_str = ''
+        price_str = ''
+        for menuItem in self.stall.menu_items_by_day:
+            menuItem_str = menuItem_str + menuItem.name + "\n"
+            price_str = price_str + "${}\n".format(menuItem.price)
+        self.list_menu_items.setText(menuItem_str)
+        self.list_price_details.setText(price_str)
 
 
 if __name__ == "__main__":
