@@ -100,7 +100,7 @@ class DigitalClock(QtWidgets.QWidget, Ui_widget_DigitalClock):
         textTime = time.toString('hh:mm:ss')
         # update label_DigitalClock with textDate and textTime string
         # example 06/11/2019 16:20:15
-        self.label_DigitalClock.setText('Current Date and Time: ' + textDate + ' ' + textTime)
+        self.label_DigitalClock.setText(textDate + ' ' + textTime)
 
 
 if __name__ == "__main__":
