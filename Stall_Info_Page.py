@@ -214,7 +214,7 @@ class Ui_Stall_Info_Window(object):
             _translate("Stall_Info_Window", "Full Operation Hours:\n" + self.stall.getAllOperationHoursInString()))
         self.label_selectedDateTime.setText(
             _translate(
-                "Stall_Info_Window", "Selected Date and Time: " + self.selectedDatetime.strftime("%A %d/%m/%Y, %H:%M")))
+                "Stall_Info_Window", "Selected Date and Time: " + self.selectedDatetime.strftime("%A, %d/%m/%Y, %H:%M")))
         
         # self.list_menu_items.append()
         self.label_calcWaitTime.setText("Estimated Waiting Time: ")
