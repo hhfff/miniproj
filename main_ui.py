@@ -204,8 +204,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.lbl_canteen_name.setText(_translate("MainWindow", "Welcome to North Spine Canteen Information System!"))
-        self.ck_normal.setText(_translate("MainWindow", "Normal"))
-        self.ck_fast_food.setText(_translate("MainWindow", "Fast Food"))
+        self.ck_normal.setText(_translate("MainWindow", "Normal (Non-Fast-Food)"))
+        self.ck_fast_food.setText(_translate("MainWindow", "Fast-Food"))
         self.lbl_date.setText(_translate("MainWindow", 'datetime'))
         self.pushButton.setText(_translate("MainWindow", "Select date and time"))
         self.resetButton.setText(_translate("MainWindow","Use Current date and time"))
