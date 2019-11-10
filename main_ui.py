@@ -111,25 +111,25 @@ class Ui_MainWindow(object):
         
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        #search
-        self.availableStoreLabel=QtWidgets.QLabel()
-        self.availableStoreLabel.setObjectName("availableStoreLabel")
-        self.availableStoreLabel.setText("Available Stores")
-        self.availableStoreLabel.setStyleSheet('''
-                #availableStoreLabel{
+        # search
+        self.availableStallLabel = QtWidgets.QLabel()
+        self.availableStallLabel.setObjectName("availableStallLabel")
+        self.availableStallLabel.setText("Available Stalls")
+        self.availableStallLabel.setStyleSheet('''
+                #availableStallLabel{
                     font-size:16px;
                 }
         ''')
-        self.searchAreaHLayout=QtWidgets.QHBoxLayout()
-        self.searchAreaHLayout.addWidget(self.availableStoreLabel)
+        self.searchAreaHLayout = QtWidgets.QHBoxLayout()
+        self.searchAreaHLayout.addWidget(self.availableStallLabel)
 
-        self.searchWidget=QtWidgets.QWidget()
-        self.searchHlayout=QtWidgets.QHBoxLayout()
-        self.searchIcon = QtWidgets.QLabel(chr(0xf002) + ' '+'Search  ')
+        self.searchWidget = QtWidgets.QWidget()
+        self.searchHlayout = QtWidgets.QHBoxLayout()
+        self.searchIcon = QtWidgets.QLabel(chr(0xf002) + ' ' + 'Search  ')
         self.searchIcon.setFont(qtawesome.font('fa', 16))
         self.searchHlayout.addWidget(self.searchIcon)
         self.searchInput = QtWidgets.QLineEdit()
-        self.searchInput.setPlaceholderText("Enter Store Name")
+        self.searchInput.setPlaceholderText("Enter Stall Name")
         self.searchInput.textChanged.connect(self.onSearchTextChange)
         self.searchHlayout.addWidget(self.searchInput)
         self.searchWidget.setLayout(self.searchHlayout)
@@ -203,9 +203,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.lbl_canteen_name.setText(_translate("MainWindow", self.main_window_controller.canteen.name))
-        self.ck_normal.setText(_translate("MainWindow", "Normal"))
-        self.ck_fast_food.setText(_translate("MainWindow", "Fast Food"))
+        self.lbl_canteen_name.setText(_translate("MainWindow", "Welcome to North Spine Canteen Information System!"))
+        self.ck_normal.setText(_translate("MainWindow", "Normal (Non-Fast-Food)"))
+        self.ck_fast_food.setText(_translate("MainWindow", "Fast-Food"))
         self.lbl_date.setText(_translate("MainWindow", 'datetime'))
         self.pushButton.setText(_translate("MainWindow", "Select date and time"))
         self.resetButton.setText(_translate("MainWindow","Use Current date and time"))
@@ -230,44 +230,44 @@ class Ui_MainWindow(object):
         self.main_window_controller.useCurrentDateTime()
 
 
-    def displayStall(self,stores):
-        #delete previous widget first
+        def displayStall(self, stalls):
+        # delete previous widget first
         for i in reversed(range(self.gridLayout_stalls.count())):
-            item=self.gridLayout_stalls.itemAt(i)
+            item = self.gridLayout_stalls.itemAt(i)
             if item is not None:
-                widget=item.widget()
+                widget = item.widget()
                 if widget is not None:
                     widget.setParent(None)
                     widget.deleteLater()
-        #add new button
-        if len(stores)!=0:
-            x,y=0,0   # x and y position
-            maxX=3# maxmum per row
-            for item in stores:
-                btn=QtWidgets.QToolButton()
+        # add new button
+        if len(stalls) != 0:
+            x, y = 0, 0  # x and y position
+            maxX = 3  # maxmum per row
+            for item in stalls:
+                btn = QtWidgets.QToolButton()
                 btn.setText(item.name)
-                #btn.setMaximumSize(QtCore.QSize(100,100))
-                btn.clicked.connect(lambda checked,item=item: self.openStallDetail(item))
-                icon=self.loadImage(self.main_window_controller.image_url_prefix+item.pic_addr,isIcon=True)
+                # btn.setMaximumSize(QtCore.QSize(100,100))
+                btn.clicked.connect(lambda checked, item=item: self.openStallDetail(item))
+                icon = self.loadImage(self.main_window_controller.image_url_prefix + item.pic_addr, isIcon=True)
                 btn.setIcon(icon)
-                btn.setIconSize(QtCore.QSize(150,150))
+                btn.setIconSize(QtCore.QSize(150, 150))
                 btn.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
-                
-                self.gridLayout_stalls.addWidget(btn,y,x)
-                x+=1
-                if x==maxX:
-                    x=0
-                    y+=1
+
+                self.gridLayout_stalls.addWidget(btn, y, x)
+                x += 1
+                if x == maxX:
+                    x = 0
+                    y += 1
         else:
-            label=QtWidgets.QLabel()
-            label.setText("No store available")
+            label = QtWidgets.QLabel()
+            label.setText("No stall available")
             label.setStyleSheet('''
                 QLabel{
                     font-size:20px;
                 }
             ''')
             label.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
-            self.gridLayout_stalls.addWidget(label,0,0)
+            self.gridLayout_stalls.addWidget(label, 0, 0)
        
 
     def openStallDetail(self,stall):
@@ -280,6 +280,7 @@ class Ui_MainWindow(object):
     def updateDateTimeText(self,dt):
         self.lbl_date.setText(dt.strftime('%A %d/%m/%Y %H:%M'))
     def onSearchTextChange(self):
-        self.main_window_controller.filterStore(self.searchInput.text(),self.ck_fast_food.isChecked(),self.ck_normal.isChecked())
+        self.main_window_controller.filterStall(self.searchInput.text(), self.ck_fast_food.isChecked(),
+                                                self.ck_normal.isChecked())
 
 
