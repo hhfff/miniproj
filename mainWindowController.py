@@ -29,12 +29,12 @@ class MainWindowController():
 
     def getStalls(self,datetime):
         self.curr_stalls=Stall.fetchStalls(self.getDayIdByDateTime(datetime),self.getTimeByDateTime(datetime))
+        
     def useCurrentDateTime(self):
         self.currentDatetime=self.getCurrentSystemTime()
         self.setSelectTime(self.currentDatetime)
 
     def setSelectTime(self,newValue):
-        #todo check equal
         self.selectedDateTime=newValue
         self.getStalls(self.selectedDateTime)
         self.mainUi.updateDateTimeText(self.selectedDateTime)
