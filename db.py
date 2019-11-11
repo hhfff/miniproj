@@ -1,7 +1,7 @@
 import sqlite3
 
 DB_NAME = 'data.db'
-# should just dump data from database
+# below is code to init database with default value
 sqls = '''
         create table if not exists canteens(
             id integer primary key,
@@ -393,7 +393,7 @@ sqls = '''
         
         '''
 
-
+#check whether database exist
 def check_DB_exist():
     try:
         conn = sqlite3.connect(DB_NAME)
@@ -405,7 +405,7 @@ def check_DB_exist():
     finally:
         conn.close()
 
-
+#create database with initial value
 def initDB():
     try:
         conn = sqlite3.connect(DB_NAME)
@@ -422,7 +422,7 @@ def initDB():
 def insert():
     pass
 
-
+#execute query and return the result
 def retrieve(query):
     print(query)
     dataList=[]

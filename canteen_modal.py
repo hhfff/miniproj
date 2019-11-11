@@ -64,9 +64,9 @@ class Stall(ItemType):
 
         self.menu_items_by_day=[] 
 
+    #fecth stalls base on date time
     @staticmethod
     def fetchStalls(day_id,time):
-        #each store only has 1 store type, if not must use group concat
         query='''select stalls.id,stalls.name,stalls.description,stalls.pic_addr,stalls.canteen_id,operation_hours.day_id,days.name as day_name,operation_hours.start_time,operation_hours.end_time, stall_types.name as stall_type from stalls
             inner join operation_hours 
             on stalls.id = operation_hours.stall_id
@@ -84,6 +84,7 @@ class Stall(ItemType):
         result=db.retrieve(query)
         return [Stall(data) for data in result]
 
+    #fecth all operating hour
     def fetchAllOperationHours(self):
         if len(self.all_operation_hours) <=0:
             query='''select operation_hours.day_id, days.name,operation_hours.start_time,operation_hours.end_time from operation_hours
@@ -93,7 +94,8 @@ class Stall(ItemType):
             '''.format(self.id)
             rs=db.retrieve(query)
             [self.all_operation_hours.append(OperationHour(data['day_id'],data['name'],data['start_time'],data['end_time'])) for data in rs]
-    #for stall detail page use
+    
+    #for return all operation hours in string, stall detail page need this
     def getAllOperationHoursInString(self):
         str=''
         for operationHour in self.all_operation_hours:
@@ -101,6 +103,7 @@ class Stall(ItemType):
             str+=s
         return str
 
+    #fetch menus
     def fetchMenuByDay(self,day_id,time):
         #todo
         #menu item items column does't require
@@ -118,7 +121,8 @@ class Stall(ItemType):
                 ;
         '''.format(self.id,day_id,time,time)
         self.menu_items_by_day=[ MenuItem(data) for data in db.retrieve(query)]
-        
+    
+    #fecth all menus
     def fetchAllMenu(self):
         query='''SELECT menu_items.id,menu_items.name,menu_items.description,menu_items.pic_addr,menu_items.price,menu_items.stall_id,menu_items_time.day_id, days.name as day_name,menu_items_time.start_time,menu_items_time.end_time from menu_items 
                 INNER JOIN menu_items_time 

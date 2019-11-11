@@ -19,10 +19,12 @@ class MainWindowController():
 
     def getCurrentSystemTime(self):
         return datetime.datetime.now()
-    
+
+    #return Monday to Sunday in integer
     def getDayIdByDateTime(self,datetime):
         #monday is 0, but in database is 1 so plus 1
         return datetime.weekday()+1
+    #return datetime in time formate
     def getTimeByDateTime(self,datetime):
         return datetime.strftime('%H:%M:%S')
         #return '09:09:09'
@@ -34,13 +36,14 @@ class MainWindowController():
         self.currentDatetime=self.getCurrentSystemTime()
         self.setSelectTime(self.currentDatetime)
 
+    #set select time to newValue and update in UI
     def setSelectTime(self,newValue):
         self.selectedDateTime=newValue
         self.getStalls(self.selectedDateTime)
         self.mainUi.updateDateTimeText(self.selectedDateTime)
         self.mainUi.onSearchTextChange()
         
-    #non hala,fast food and halal , but since we only has fast food and other
+    #non hala,fast food and halal , but since we only has fast food and other, we just compare 2 condition
     def filterStall(self, text, fastfoodChecked, nonfastFoodChecked):
         filteredStall = []  # reset
         for stall in self.curr_stalls:

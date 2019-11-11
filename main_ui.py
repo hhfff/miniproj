@@ -210,15 +210,14 @@ class Ui_MainWindow(object):
         self.lbl_date.setText(_translate("MainWindow", 'datetime'))
         self.pushButton.setText(_translate("MainWindow", "Select date and time"))
         self.resetButton.setText(_translate("MainWindow","Use Current date and time"))
-
+    #open the select date time dialog 
     def openDateTimePicker(self):
         self.SelectDateTime = SelectDateTime( self.main_window_controller)
         self.SelectDateTime.setWindowModality(QtCore.Qt.ApplicationModal)
-        #self.SelectDateTime.setWindowModality(QtCore.Qt.ApplicationModal)
-        #self.selectDateTimeUi = Ui_SelectDateTime()
-        #self.selectDateTimeUi.setupUi(self.SelectDateTime,self.main_window_controller)
+
         self.SelectDateTime.show()
 
+    #load image and return icon
     def loadImage(self,image_url,isIcon=False):
         try:
             if isIcon:
@@ -227,10 +226,11 @@ class Ui_MainWindow(object):
                 return QtGui.QPixmap(image_url)
         except Exception:
             print('load image error')
+    #reset select date time to current date time
     def resetDateTime(self):
         self.main_window_controller.useCurrentDateTime()
 
-
+    #display store in the qgrid widgets
     def displayStall(self, stalls):
         # delete previous widget first
         for i in reversed(range(self.gridLayout_stalls.count())):
@@ -255,6 +255,7 @@ class Ui_MainWindow(object):
                 btn.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 
                 self.gridLayout_stalls.addWidget(btn, y, x)
+                # increase x posiotion,here we want display 3 in a row, if x postion  is 0,1,2 , add to qgrid , if x is 3 , reset to 0 and increase y by 1
                 x += 1
                 if x == maxX:
                     x = 0
@@ -270,7 +271,7 @@ class Ui_MainWindow(object):
             label.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.gridLayout_stalls.addWidget(label, 0, 0)
        
-
+    #open stall detail and pass main window controller
     def openStallDetail(self,stall):
         self.Stall_Info_Window = QtWidgets.QMainWindow()
         self.Stall_Info_Window.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -280,6 +281,8 @@ class Ui_MainWindow(object):
 
     def updateDateTimeText(self,dt):
         self.lbl_date.setText(dt.strftime('%A %d/%m/%Y %H:%M'))
+        
+    #whenever  search  input text field change, it will call this to filter and display the resut
     def onSearchTextChange(self):
         self.main_window_controller.filterStall(self.searchInput.text(), self.ck_fast_food.isChecked(),
                                                 self.ck_normal.isChecked())
