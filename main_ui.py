@@ -53,6 +53,7 @@ class Ui_MainWindow(object):
 
         
         self.horizontalLayout = QtWidgets.QHBoxLayout()
+        
         self.horizontalLayout.setObjectName("horizontalLayout")
         
 
@@ -202,7 +203,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Canteen System"))
         self.lbl_canteen_name.setText(_translate("MainWindow", "Welcome to North Spine Canteen Information System!"))
         self.ck_normal.setText(_translate("MainWindow", "Normal (Non-Fast-Food)"))
         self.ck_fast_food.setText(_translate("MainWindow", "Fast-Food"))
