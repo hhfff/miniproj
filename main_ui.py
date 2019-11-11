@@ -230,7 +230,7 @@ class Ui_MainWindow(object):
         self.main_window_controller.useCurrentDateTime()
 
 
-        def displayStall(self, stalls):
+    def displayStall(self, stalls):
         # delete previous widget first
         for i in reversed(range(self.gridLayout_stalls.count())):
             item = self.gridLayout_stalls.itemAt(i)
