@@ -424,7 +424,7 @@ def insert():
 
 #execute query and return the result
 def retrieve(query):
-    print(query)
+    #print(query)
     dataList=[]
     try:
         conn = sqlite3.connect(DB_NAME)

@@ -316,7 +316,6 @@ class Ui_Stall_Info_Window(object):
     ########################################        Hefei           ###########################################
     # function when the combox is changed onComboBoxChang
     def onComboBoxChange(self,text):
-        print(text)
         if text =="All":
             self.stall.fetchAllMenu()
         elif text =="Current time":
