@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
+## designed by Stanley
 class Ui_widget_DigitalClock(object):
     def setupUi(self, widget_DigitalClock):
         widget_DigitalClock.setObjectName("widget_DigitalClock")
@@ -13,40 +13,6 @@ class Ui_widget_DigitalClock(object):
 
         self.verticalLayout = QtWidgets.QVBoxLayout(widget_DigitalClock)
         self.verticalLayout.setObjectName("verticalLayout")
-
-        '''self.label_Title = QtWidgets.QLabel(widget_DigitalClock)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-                                           QtWidgets.QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_Title.sizePolicy().hasHeightForWidth())
-        self.label_Title.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Palatino Linotype")
-        font.setPointSize(11)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_Title.setFont(font)
-        self.label_Title.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_Title.setObjectName("label_Title")
-        self.label_Title.setText("Current Date and Time:")
-        self.verticalLayout.addWidget(self.label_Title)'''
-
-        '''self.label_CurrentDate = QtWidgets.QLabel(widget_DigitalClock)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_CurrentDate.sizePolicy().hasHeightForWidth())
-        self.label_CurrentDate.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Palatino Linotype")
-        font.setPointSize(11)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_CurrentDate.setFont(font)
-        self.label_CurrentDate.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_CurrentDate.setObjectName("label_CurrentDate")
-        self.verticalLayout.addWidget(self.label_CurrentDate)'''
 
         self.label_DigitalClock = QtWidgets.QLabel(widget_DigitalClock)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
