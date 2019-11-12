@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
+## designed by Stanley
 class Ui_widget_DigitalClock(object):
     def setupUi(self, widget_DigitalClock):
         widget_DigitalClock.setObjectName("widget_DigitalClock")
