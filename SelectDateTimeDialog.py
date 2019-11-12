@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 
+# designed by Stanley
 # create UI for SelectDateTime dialog (separate window)
 class Ui_SelectDateTime(object):
     def setupUi(self, SelectDateTime):
